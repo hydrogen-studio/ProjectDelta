@@ -2,9 +2,10 @@ let express = require("express")
 let cookieParser = require('cookie-parser');
 let crypto = require("crypto");
 let fetch = require("node-fetch");
-
+var fs = require('fs');
 let config = require('./config.json');
 let storage = require('./storage.js');
+
 
 async function getAccessToken(userId, tokens) {
     if (Date.now() > tokens.expires_at) {
@@ -63,7 +64,6 @@ async function pushMetadata(userId, tokens, metadata) {
 async function updateMetadata(userId) {
     // Fetch the Discord tokens from storage
     const tokens = await storage.getDiscordTokens(userId);
-    console.log(tokens)
     let metadata = {};
     try {
       // Fetch the new metadata you want to use from an external source. 
@@ -194,14 +194,15 @@ app.get('/linked-role', async (req, res) => {
       expires_at: Date.now() + tokens.expires_in * 1000,
     });
 
-    console.log(await updateMetadata(userId));
+    await updateMetadata(userId)
 
-    res.send('You did it!  Now go back to Discord.');
+    res.send(`Discord linked! Your current commands executed count is: ${await storage.commandsGet(userId)}`);
   } catch (e) {
     console.error(e);
     res.sendStatus(500);
   }
 });
+
 
 
 

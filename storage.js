@@ -1,4 +1,4 @@
-
+let fs = require('fs');
 const store = new Map();
 var JSONStore = require('json-store');
 var db = JSONStore(__dirname + '/database.json');
@@ -13,7 +13,7 @@ exports.getDiscordTokens = async function(userId) {
 exports.commandsSet = async function (userId, number) {
 	await db.set(`commands-${userId}`, number);
 }
-
 exports.commandsGet = async function(userId) {
-	return db.get(`commands-${userId}`) == undefined ? 0 : db.get(`commands-${userId}`);
+    let file = JSON.parse(fs.readFileSync(__dirname + '/database.json').toString("utf8"));
+	return file[`commands-${userId}`] == undefined ? 0 : file[`commands-${userId}`];
 }
