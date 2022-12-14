@@ -26,8 +26,8 @@ const rest = new REST({ version: '10' }).setToken(token);
 			// { body: commands },
 			// Routes.applicationGuildCommands(clientId, guildId),
 			// { body: [] },
-			// Routes.applicationCommands(clientId),
-			// { body: commands },
+			Routes.applicationCommands(clientId),
+			{ body: commands },
 			// Routes.applicationCommands(clientId),
 			// { body: [] },
 		);
