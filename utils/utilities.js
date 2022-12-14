@@ -18,3 +18,6 @@ exports.formatTime = function(d) {
 	return day + ', ' + hr + ':' + min + ampm + ', ' + month + ' ' + date + ', ' + year;
 }
 
+exports.checkPremium = function(interaction, client){
+	return client.guilds.cache.get("1052444692672937984").roles.cache.get("1052664029107191842").members.has(interaction.user.id)
+}

@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { formatTime } = require('../utils/utilities.js');
 
 module.exports = {
+	premium: false,
 	data: new SlashCommandBuilder()
 		.setName('info')
 		.setDescription('All the commands that contains information about the bot.')
@@ -46,7 +47,26 @@ module.exports = {
 			await interaction.reply({ embeds: [userEmbed] });
 		}
 		else if (interaction.options.getSubcommand() === 'server') {
-			await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
+			const guild = interaction.guild;
+			const description = guild.description ? guild.description : 'This server have no description set';
+			const userEmbed = new EmbedBuilder()
+				.setColor(0x0099FF)
+				.setTitle(guild.name)
+				.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+				.setThumbnail(guild.iconURL())
+				.setDescription(description)
+				.setColor(0x0099FF)
+				.addFields(
+					{ name: 'Server Name', value: guild.name, inline: true },
+					{ name: 'Server ID', value: guild.id, inline: true },
+					{ name: 'Server Locale', value: guild.preferredLocale, inline: true },
+					{ name: 'Members Count', value: guild.memberCount.toString(), inline: true },
+					{ name: 'Roles Count', value: guild.roles.cache.size.toString(), inline: true },
+					{ name: 'Channels Count', value: guild.channels.cache.size.toString(), inline: true },
+				)
+				.setTimestamp()
+				.setFooter({ text: `Thank you for using ${interaction.client.user.username}` });
+			await interaction.reply({ embeds: [userEmbed] });
 		}
 		else if (interaction.options.getSubcommand() === 'ping') {
 			const pingEmbed = new EmbedBuilder()
