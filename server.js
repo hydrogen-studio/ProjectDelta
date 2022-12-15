@@ -5,6 +5,8 @@ let fetch = require("node-fetch");
 var fs = require('fs');
 let config = require('./config.json');
 let storage = require('./storage.js');
+const bodyParser = require('body-parser');
+const { checkPremium } = require("./utils/utilities.js")
 
 
 async function getAccessToken(userId, tokens) {
@@ -100,14 +102,14 @@ function getOAuthUrl() {
     return { state, url: url.toString() };
   }
 
-  async function getOAuthTokens(code) {
+  async function getOAuthTokens(code, redirect = config.DISCORD_REDIRECT_URI) {
     const url = "https://discord.com/api/v10/oauth2/token";
     const body = new URLSearchParams({
       client_id: config.DISCORD_CLIENT_ID,
       client_secret: config.DISCORD_CLIENT_SECRET,
       grant_type: "authorization_code",
       code,
-      redirect_uri: config.DISCORD_REDIRECT_URI,
+      redirect_uri: redirect,
     });
   
     const response = await fetch(url, {
@@ -121,6 +123,7 @@ function getOAuthUrl() {
       const data = await response.json();
       return data;
     } else {
+      console.log(response)
       throw new Error(
         `Error fetching OAuth tokens: [${response.status}] ${response.statusText}`
       );
@@ -147,16 +150,42 @@ function getOAuthUrl() {
 /**
  * Main HTTP server used for the bot.
  */
-
+var axios = require('axios');
+var qs = require('qs');
  const app = express();
  app.use(cookieParser(config.COOKIE_SECRET));
+ app.use(bodyParser.urlencoded({ extended: true }));
+ app.use(bodyParser.json());
+ app.use(bodyParser.raw());
+
+
+  app.use(express.static(__dirname + "/website"));
+  app.use("/dashboard", express.static(__dirname + "/dashboard"));
+
+  app.post('/login', async (req, res) => {
+    try {
+      const { code } = req.body;
+      let token = await getOAuthTokens(code, config.loginRedirect);
+      let user = await getUserData(token)
+      user.user.commandsRan = await storage.commandsGet(user.user.id)
+      // user.user.premiumStatus = checkPremium(user.user.id) ? "Active" : "Inactive"
+      console.log(user.user)
+      res.send(user)
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
+  })
 
  /**
   * Just a happy little route to show our server is up.
   */
- app.get('/', (req, res) => {
-   res.sendFile(__dirname + "/website/index.html");
- });
+//  app.get('/', (req, res) => {
+//    res.sendFile(__dirname + "/website/index.html");
+//  });
+
+ app.get('/login', (req, res) => {
+  res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.clientId}&redirect_uri=http%3A%2F%2F192.168.1.22%2Fdashboard&response_type=code&scope=identify`);
+});
 
  app.get('/invite', (req, res) => {
    res.redirect("https://discord.com/api/oauth2/authorize?client_id=" + config.clientId + "&permissions=" + config.PERM + "&scope=bot%20applications.commands");
@@ -169,18 +198,8 @@ function getOAuthUrl() {
  app.get('/discord', (req, res) => {
   res.redirect("https://discord.gg/zZw3rMw6pF");
 });
-app.get('/assets/bootstrap/css/bootstrap.min.css', (req, res) => {
-  res.sendFile(__dirname + "/website/assets/bootstrap/css/bootstrap.min.css");
-});
-app.get('/assets/img/bg-masthead.jpg', (req, res) => {
- res.sendFile(__dirname + "/website/assets/img/bg-masthead.jpg");
-});
-app.get('/assets/img/P.jpg', (req, res) => {
-  res.sendFile(__dirname + "/website/assets/img/P.jpg");
-});
-app.get('/assets/js/script.min.js', (req, res) => {
-  res.sendFile(__dirname + "/website/assets/js/script.min.js");
-});
+
+
 
  app.get('/update-commands', async (req, res) => {
   const { url, state } = getOAuthUrl();
