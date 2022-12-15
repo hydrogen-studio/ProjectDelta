@@ -155,8 +155,32 @@ function getOAuthUrl() {
   * Just a happy little route to show our server is up.
   */
  app.get('/', (req, res) => {
-   res.send('👋');
+   res.sendFile(__dirname + "/website/index.html");
  });
+
+ app.get('/invite', (req, res) => {
+   res.redirect("https://discord.com/api/oauth2/authorize?client_id=" + config.clientId + "&permissions=" + config.PERM + "&scope=bot%20applications.commands");
+ });
+
+ app.get('/projectomega', (req, res) => {
+   res.redirect("https://discord.com/servers/projectdelta-1052444692672937984");
+ });
+ 
+ app.get('/discord', (req, res) => {
+  res.redirect("https://discord.gg/zZw3rMw6pF");
+});
+app.get('/assets/bootstrap/css/bootstrap.min.css', (req, res) => {
+  res.sendFile(__dirname + "/website/assets/bootstrap/css/bootstrap.min.css");
+});
+app.get('/assets/img/bg-masthead.jpg', (req, res) => {
+ res.sendFile(__dirname + "/website/assets/img/bg-masthead.jpg");
+});
+app.get('/assets/img/P.jpg', (req, res) => {
+  res.sendFile(__dirname + "/website/assets/img/P.jpg");
+});
+app.get('/assets/js/script.min.js', (req, res) => {
+  res.sendFile(__dirname + "/website/assets/js/script.min.js");
+});
 
  app.get('/update-commands', async (req, res) => {
   const { url, state } = getOAuthUrl();
