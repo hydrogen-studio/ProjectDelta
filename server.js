@@ -208,7 +208,7 @@ app.get('/linked-role', async (req, res) => {
 
     await updateMetadata(userId)
 
-    res.send(`Discord linked! Your current commands executed count is: ${await storage.commandsGet(userId)}`);
+    res.send(`Operation Complete, Your current commands executed count is: ${await storage.commandsGet(userId)}`);
   } catch (e) {
     console.error(e);
     res.sendStatus(500);
