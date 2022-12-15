@@ -184,7 +184,7 @@ var qs = require('qs');
 //  });
 
  app.get('/login', (req, res) => {
-  res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.clientId}&redirect_uri=http%3A%2F%2F192.168.1.22%2Fdashboard&response_type=code&scope=identify`);
+  res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.clientId}&redirect_uri=${config.loginRedirect}&response_type=code&scope=identify`);
 });
 
  app.get('/invite', (req, res) => {
