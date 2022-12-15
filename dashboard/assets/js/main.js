@@ -20,7 +20,7 @@ window.onload = function() {
         redirect: 'follow'
         };
 
-        fetch("http://192.168.1.22/login", requestOptions)
+        fetch("/login", requestOptions)
         .then(response => response.json())
         .then(result => {
             document.getElementById("username").innerText = result.user.username;
