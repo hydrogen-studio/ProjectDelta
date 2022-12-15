@@ -6,7 +6,19 @@ module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction, client) {
 		if (!interaction.isChatInputCommand()) return;
-		// console.log(interaction.guild.members.cache)
+
+		if(interaction.inGuild() == false){
+				
+			const dmEmbed = new EmbedBuilder()
+				.setTitle("Premium Only Command")
+				.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+				.setDescription(`**This command is only available in a server, not dms!**`)
+				.setColor(0x0099FF)
+				.setTimestamp()
+				.setFooter({ text: `Thank you for using ${interaction.client.user.username}` });
+				await interaction.reply({ embeds: [dmEmbed], ephemeral: true });
+				return;
+		}
 
 		const command = interaction.client.commands.get(interaction.commandName);
 
@@ -36,7 +48,6 @@ module.exports = {
 		try {
 			await command.execute(interaction);
 			let number = await commandsGet(interaction.user.id) + 1;
-			console.log(number)
 			commandsSet(interaction.user.id, number);
 		}
 		catch (error) {
