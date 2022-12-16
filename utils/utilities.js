@@ -41,7 +41,7 @@ exports.checkPremium = async function(userId){
 	method: 'get',
 	url: 'https://api.patreon.com/oauth2/v2/campaigns/9748539/members?include=currently_entitled_tiers,user&fields%5Btier%5D=title&fields%5Buser%5D=social_connections',
 	headers: { 
-		'Authorization': 'Bearer rv3rHgN-aB4iRit30Fqvlkax3D_gqZJWX4MGkgoACvQ', 
+		'Authorization': 'Bearer ' + PATREON_API, 
 		'Cookie': '__cf_bm=qTYBQHleBVRoEkpTAn9aWT8VTUmdrEKWgf.XWWLnxng-1671217685-0-AZu3bm4rT1gANdHKqzZciRIn63Ad06xej2jd1c+PqOsuvQNpqQsEVrtweC1P0+pzS9hlPggDnMvAfCXovJPG1bR4z6une2h+YQ6WV2jRw8YE; patreon_device_id=bbc8956b-1b54-481d-8285-ed7046e4b9f6'
 	}
 	};
