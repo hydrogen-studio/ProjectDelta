@@ -18,11 +18,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('ping')
-				.setDescription('The response times of the bot!'))
-		.addSubcommand(subcommand =>
-			subcommand
-				.setName('premium')
-				.setDescription('Information about ProjectOmega!')),
+				.setDescription('The response times of the bot!')),
 	async execute(interaction) {
 		if (interaction.options.getSubcommand() === 'user') {
 			const user = interaction.options.getUser('target') ? interaction.options.getUser('target') : interaction.user;
@@ -82,20 +78,6 @@ module.exports = {
 				.setFooter({ text: `Thank you for using ${interaction.client.user.username}` });
 
 			await interaction.reply({ embeds: [pingEmbed] });
-		}
-		else if (interaction.options.getSubcommand() === 'premium') {
-			const premiumEmbed = new EmbedBuilder()
-				.setColor(0x0099FF)
-				.setTitle('ProjectOmega')
-				.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-				.setDescription("ProjectOmega is the extended experience of the bot, it's a premium service that gives you access to a lot of features and commands! You can learn more about ProjectOmega by clicking on the link below.")
-				.addFields(
-					{ name: 'ProjectOmega Information', value: `[More information here](https://discord.com/servers/projectdelta-1052444692672937984)`, inline: true }
-				)
-				.setTimestamp()
-				.setFooter({ text: `Thank you for using ${interaction.client.user.username}` });
-
-			await interaction.reply({ embeds: [premiumEmbed] });
 		}
 	},
 };
