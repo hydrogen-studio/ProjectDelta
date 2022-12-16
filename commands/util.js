@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { formatTime } = require('../utils/utilities.js');
 
 module.exports = {
-	premium: false,
+	premium: 0,
 	data: new SlashCommandBuilder()
 		.setName('util')
 		.setDescription('Utilities at it\'s finest!')

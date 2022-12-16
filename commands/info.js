@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { formatTime } = require('../utils/utilities.js');
 
 module.exports = {
-	premium: false,
+	premium: 0,
 	data: new SlashCommandBuilder()
 		.setName('info')
 		.setDescription('All the commands that contains information about the bot.')
