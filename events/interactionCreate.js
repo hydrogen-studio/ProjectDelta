@@ -59,7 +59,7 @@ module.exports = {
 				.setDescription(`**This command is only available to our premium users!**`)
 				.setColor(0x0099FF)
 				.addFields(
-					{ name: 'Purchase Premium Here', value: "[Purchase for $2.99/month](https://discord.com/servers/projectdelta-1052444692672937984)", inline: true },
+					{ name: 'Purchase Premium Here', value: "[Purchase for $2.99/month](https://www.patreon.com/projectdeltaplus)", inline: true },
 				)
 				.setTimestamp()
 				.setFooter({ text: `Thank you for using ${interaction.client.user.username}` });
