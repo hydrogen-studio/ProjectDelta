@@ -160,32 +160,6 @@ var qs = require('qs');
 
 
   app.use(express.static(__dirname + "/website"));
-  app.use("/dashboard", express.static(__dirname + "/dashboard"));
-
-  app.post('/login', async (req, res) => {
-    try {
-      const { code } = req.body;
-      let token = await getOAuthTokens(code, config.loginRedirect);
-      let user = await getUserData(token)
-      user.user.commandsRan = await storage.commandsGet(user.user.id)
-      // user.user.premiumStatus = checkPremium(user.user.id) ? "Active" : "Inactive"
-      console.log(user.user)
-      res.send(user)
-    } catch (e) {
-      res.status(500).send(e.message);
-    }
-  })
-
- /**
-  * Just a happy little route to show our server is up.
-  */
-//  app.get('/', (req, res) => {
-//    res.sendFile(__dirname + "/website/index.html");
-//  });
-
- app.get('/login', (req, res) => {
-  res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.clientId}&redirect_uri=${config.loginRedirect}&response_type=code&scope=identify`);
-});
 
  app.get('/invite', (req, res) => {
    res.redirect("https://discord.com/api/oauth2/authorize?client_id=" + config.clientId + "&permissions=" + config.PERM + "&scope=bot%20applications.commands");
