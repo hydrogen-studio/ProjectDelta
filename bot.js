@@ -1,7 +1,7 @@
 const config = require('./config.json');
 const { ShardingManager } = require('discord.js');
 
-const manager = new ShardingManager('./index.js', { token: config.token,  totalShards: 1 });
+const manager = new ShardingManager('./index.js', { token: config.token,  totalShards: 2 });
 
 manager.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
 
