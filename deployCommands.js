@@ -28,8 +28,8 @@ const rest = new REST({ version: '10' }).setToken(token);
 			// { body: [] },
 			// Routes.applicationCommands(clientId),
 			// { body: [] },
-			// Routes.applicationCommands(clientId),
-			// { body: commands },
+			Routes.applicationCommands(clientId),
+			{ body: commands },
 		);
 
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);

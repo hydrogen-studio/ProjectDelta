@@ -75,7 +75,6 @@ exports.checkPremium = async function(userId){
 
 		
 		if(tier["ProjectDelta Server"].includes(userId.id)){
-			console.log("hi")
 			return 1
 		}else if(tier["ProjectDelta User"].includes(userId.id)){
 			return 2
