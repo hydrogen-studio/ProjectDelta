@@ -37,7 +37,7 @@ module.exports = {
             if(serverMember.kickable){
 			const reason = interaction.options.getString('reason') == undefined || interaction.options.getString('reason') == null || interaction.options.getString('reason') == "" ? 'No reason provided.' : interaction.options.getString('reason');
 			
-			await interaction.guild.members.kick(user, reason);
+			await interaction.guild.members.kick(user, `Banned by ${interaction.user.username} | ` + reason);
 			const userEmbed = new EmbedBuilder()
 				.setColor(0x0099FF)
 				.setTitle('User Kicked.')
@@ -82,7 +82,7 @@ module.exports = {
 				return;
 			}
             if(serverMember.bannable){
-                await interaction.guild.members.ban(user, { days: days, reason: reason });
+                await interaction.guild.members.ban(user, { days: days, reason: `Banned by ${interaction.user.username} | ` + reason });
                 const userEmbed = new EmbedBuilder()
 				.setColor(0x0099FF)
 				.setTitle('User Banned.')
