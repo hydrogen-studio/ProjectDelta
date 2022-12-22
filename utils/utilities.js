@@ -1,5 +1,5 @@
 let fs = require("fs")
-let { PATREON_API } = require("../config.json")
+let { PATREON_API, DEV_ACCOUNT_IDS } = require("../config.json")
 let axios = require("axios")
 let qs = require("qs");
 
@@ -37,6 +37,7 @@ exports.checkPremium = async function(interaction, allowed){
 
 
 exports.checkPremium = async function(userId){
+	if(DEV_ACCOUNT_IDS.includes(userId.id))return 3
 	var config = {
 	method: 'get',
 	url: 'https://api.patreon.com/oauth2/v2/campaigns/9748539/members?include=currently_entitled_tiers,user&fields%5Btier%5D=title&fields%5Buser%5D=social_connections',

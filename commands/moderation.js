@@ -19,7 +19,7 @@ module.exports = {
 				.setDescription('Ban a user!')
 				.addUserOption(option => option.setName('target').setDescription('The user').setRequired(true))
 				.addStringOption(option => option.setName('reason').setDescription('The reason for the ban!'))
-				.addNumberOption(option => option.setName('days').setDescription('[ProjectDelta Server Only!] Days of message to delete!').addChoices(
+				.addNumberOption(option => option.setName('days').setDescription('[ProjectDelta Server & Plus Only!] Days of message to delete!').addChoices(
 					{ name: '0 Days', value: 0 },
 					{ name: '1 Day', value: 1 },
 					{ name: '2 Days', value: 2 },
@@ -73,8 +73,8 @@ module.exports = {
 				const premiumEmbed = new EmbedBuilder()
 				.setColor(0x0099FF)
 				.setTitle('ProjectDelta Server required to set time to delete the user\'s messages!')
-				.setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
-				.setDescription(`Please purchase ProjectDelta Server to unlock this feature!`)
+				.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+				.setDescription(`Please purchase ProjectDelta Server or Plus to unlock this feature!`)
 				.setURL('https://www.patreon.com/projectdeltaplus')
 				.setTimestamp()
 				.setFooter({ text: `Thank you for using ${interaction.client.user.username}` });
