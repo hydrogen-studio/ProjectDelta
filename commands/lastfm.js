@@ -180,7 +180,7 @@ module.exports = {
                 let topArtists = [];
                 for(i in data){
                     if(i >= 10) break;
-                    topArtists.push({ name: `Top ${(parseInt(i) + parseInt(1))}`, value: data[i].name});
+                    topArtists.push({ name: `Top ${(parseInt(i) + parseInt(1))}`, value: data[i].name + '-' + data[i].playcount + ' plays' });
                 }
                 const ballEmbed = new EmbedBuilder()
                 .setColor(0x0099FF)
